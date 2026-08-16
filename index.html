@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artwork Portfolio</title>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-sub: #64748b;
+            --border-color: #e2e8f0;
+            --pixiv-color: #0096fa; /* Pixiv 시그니처 블루 */
+            --pixiv-hover: #007acc;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        /* Profile Section (Notion Style) */
+        .profile-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            margin-bottom: 32px;
+        }
+
+        .cover-image {
+            height: 350px;
+            background-image: url('cover.png'); /* 확장자(.jpg, .png 등)까지 동일하게 작성 */
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+        }
+
+        .profile-content {
+            padding: 0 32px 32px;
+            position: relative;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            background: #ffffff;
+            border-radius: 50%;
+            border: 4px solid #ffffff;
+            margin-top: -40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        .profile-info {
+            margin-top: 16px;
+        }
+
+        .profile-info h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .profile-info p {
+            color: var(--text-sub);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        /* SNS Buttons */
+        .sns-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .sns-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: #f1f5f9;
+            color: #334155;
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .sns-btn:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+            transform: translateY(-1px);
+        }
+
+        /* Portfolio Section */
+        section {
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .section-header h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* Portfolio Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            aspect-ratio: 1 / 1;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            transition: all 0.25s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+            border-color: #cbd5e1;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Callout Box (Commission Banner) */
+        .commission-callout {
+            background: #f0f9ff;
+            border: 1px solid #e0f2fe;
+            border-left: 5px solid var(--pixiv-color);
+            border-radius: var(--radius-md);
+            padding: 28px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 40px;
+            box-shadow: 0 4px 12px rgba(0, 150, 250, 0.05);
+        }
+
+        .commission-text h3 {
+            font-size: 1.3rem;
+            color: #0369a1;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .commission-text p {
+            color: #0284c7;
+            font-size: 0.95rem;
+        }
+
+        .commission-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--pixiv-color);
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 150, 250, 0.2);
+        }
+
+        .commission-btn:hover {
+            background: var(--pixiv-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 150, 250, 0.3);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 640px) {
+            body { padding: 12px; }
+            .profile-content { padding: 0 20px 24px; }
+            .commission-callout {
+                flex-direction: column;
+                text-align: center;
+                align-items: stretch;
+            }
+            .commission-text h3 { justify-content: center; }
+            .commission-btn { width: 100%; text-align: center; }
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0 20px;
+            color: var(--text-sub);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 프로필 영역 -->
+    <div class="profile-card">
+        <div class="cover-image"></div>
+        <div class="profile-content">
+            <div class="avatar">🎨</div>
+            <div class="profile-info">
+                <h1>DotDrawDotD</h1>
+                <p>일러스트레이터 & 디지털 아티스트</p>
+                <div class="sns-links">
+                    <a href="https://x.com/DotDrawDotD" target="_blank" class="sns-btn">X (Twitter)</a>
+                    <a href="https://www.pixiv.net/users/24291108" target="_blank" class="sns-btn">Pixiv</a>
+                    <a href="https://dotdrawdotd.fanbox.cc/" target="_blank" class="sns-btn">FANBOX</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1. 포트폴리오 갤러리 -->
+    <section>
+        <div class="section-header">
+            <h2>🖼️ Portfolio</h2>
+        </div>
+        <div class="gallery">
+            <div class="gallery-item"><img src="1.png" alt="작품 1"></div>
+            <div class="gallery-item"><img src="2.png" alt="작품 2"></div>
+            <div class="gallery-item"><img src="3.png" alt="작품 3"></div>
+            <div class="gallery-item"><img src="4.png" alt="작품 4"></div>
+            <div class="gallery-item"><img src="5.png" alt="작품 5"></div>
+            <div class="gallery-item"><img src="6.png" alt="작품 6"></div>
+            <div class="gallery-item"><img src="7.png" alt="작품 7"></div>
+            <div class="gallery-item"><img src="8.png" alt="작품 8"></div>
+            <div class="gallery-item"><img src="9.png" alt="작품 9"></div>
+            <div class="gallery-item"><img src="10.png" alt="작품 10"></div>
+            <div class="gallery-item"><img src="11.png" alt="작품 11"></div>
+            <div class="gallery-item"><img src="12.png" alt="작품 12"></div>
+
+        </div>
+    </section>
+
+    <!-- 2. 커미션 신청 배너 (Pixiv Request 연결) -->
+    <div class="commission-callout">
+        <div class="commission-text">
+            <h3>✉️ Commission & Request</h3>
+            <p>자세한 플랜 확인 및 그림 주문은 Pixiv Request를 통해 신청하실 수 있습니다.</p>
+        </div>
+        <a href="https://www.pixiv.net/request/plans/190132" target="_blank" class="commission-btn">
+            Pixiv에서 커미션 신청하기 ➔
+        </a>
+    </div>
+
+    <footer>
+        <p>© 2026 DotDrawDotD. All rights reserved.</p>
+    </footer>
+</div>
+
+</body>
+</html>
